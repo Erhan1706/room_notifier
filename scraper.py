@@ -5,6 +5,10 @@ import sys
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Logger config
 logging.basicConfig(
@@ -71,6 +75,18 @@ def check_for_direct_offers(data):
 
     return direct_offers
 
+def build_urls(data):
+    """Build URLs to send in the email."""
+    base_url = "https://www.roommatch.nl/en/offerings/to-rent/details/"
+    urls = []
+    for item in data:
+        try:
+            url = f"{base_url}{item['urlKey']}"
+            urls.append(url)
+        except KeyError as e:
+            logging.error(f"Key error: {e} in item: {item['id']}")
+            continue
+    return urls
 
 def send_email(sender_email, sender_password, recipient_email, subject, body):
     # Create message
@@ -91,7 +107,7 @@ def send_email(sender_email, sender_password, recipient_email, subject, body):
     text = msg.as_string()
     server.sendmail(sender_email, recipient_email, text)
     server.quit()
-
+    logging.info(f"Email sent")
 
 def main():
   logger = logging.getLogger()
@@ -115,7 +131,16 @@ def main():
           logger.info(f"New listings id's found: {added_ids}")
           # get the listings corresponding to the new ids
           new_data = [item for item in data['data'] if item['id'] in added_ids]
-          check_for_direct_offers(new_data)
+          direct_offers = check_for_direct_offers(new_data)
+          url_list = build_urls(direct_offers)
+
+          send_email(
+              sender_email=os.getenv('SENDER_EMAIL'),
+              sender_password=os.getenv('SENDER_PASSWORD'),
+              recipient_email=os.getenv('RECIPIENT_EMAIL'),
+              subject="AUTOMATED: ROOM.NL new direct offer",
+              body=f"New listings found: {url_list}"
+          )
 
       save_data(data)
   else:
