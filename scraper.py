@@ -129,13 +129,14 @@ def main():
           direct_offers = check_for_direct_offers(new_data)
           url_list = build_urls(direct_offers)
 
-          send_email(
-              sender_email=os.getenv('SENDER_EMAIL'),
-              sender_password=os.getenv('SENDER_PASSWORD'),
-              recipient_email=os.getenv('RECIPIENT_EMAIL'),
-              subject="AUTOMATED: ROOM.NL new direct offer",
-              body=f"New listings found: {url_list}"
-          )
+          if url_list:
+            send_email(
+                sender_email=os.getenv('SENDER_EMAIL'),
+                recipient_email=os.getenv('RECIPIENT_EMAIL'),
+                sender_password=os.getenv('SENDER_PASSWORD'),
+                subject="AUTOMATED: ROOM.NL new direct offer",
+                body=f"New listings found: {url_list}"
+            )
 
       save_data(data)
   else:
