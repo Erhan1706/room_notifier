@@ -35,7 +35,7 @@ headers = {
   'x-requested-with': 'XMLHttpRequest'
 }
 
-payload = "{\"filters\":{\"$and\":[{\"$and\":[{\"city.id\":{\"$eq\":\"4\"}},{\"municipality.id\":{\"$eq\":\"23\"}},{\"regio.id\":{\"$eq\":\"1\"}}]}]},\"hidden-filters\":{\"$and\":[{\"dwellingType.categorie\":{\"$eq\":\"woning\"}},{\"rentBuy\":{\"$eq\":\"Huur\"}},{\"isExtraAanbod\":{\"$eq\":\"\"}},{\"isWoningruil\":{\"$eq\":\"\"}},{\"$and\":[{\"$or\":[{\"street\":{\"$like\":\"\"}},{\"houseNumber\":{\"$like\":\"\"}},{\"houseNumberAddition\":{\"$like\":\"\"}}]},{\"$or\":[{\"street\":{\"$like\":\"\"}},{\"houseNumber\":{\"$like\":\"\"}},{\"houseNumberAddition\":{\"$like\":\"\"}}]}]}]}}"
+payload = "{\"filters\":{\"$and\":[{\"$or\":[{\"$and\":[{\"city.id\":{\"$eq\":\"4\"}},{\"municipality.id\":{\"$eq\":\"23\"}},{\"regio.id\":{\"$eq\":\"1\"}}]},{\"$and\":[{\"municipality.id\":{\"$eq\":\"22\"}},{\"regio.id\":{\"$eq\":\"1\"}}]}]}]},\"hidden-filters\":{\"$and\":[{\"dwellingType.categorie\":{\"$eq\":\"woning\"}},{\"rentBuy\":{\"$eq\":\"Huur\"}},{\"isExtraAanbod\":{\"$eq\":\"\"}},{\"isWoningruil\":{\"$eq\":\"\"}},{\"$and\":[{\"$or\":[{\"street\":{\"$like\":\"\"}},{\"houseNumber\":{\"$like\":\"\"}},{\"houseNumberAddition\":{\"$like\":\"\"}}]},{\"$or\":[{\"street\":{\"$like\":\"\"}},{\"houseNumber\":{\"$like\":\"\"}},{\"houseNumberAddition\":{\"$like\":\"\"}}]}]}]}}"
 url = "https://roommatching-aanbodapi.zig365.nl/api/v1/actueel-aanbod?limit=30&locale=en_GB&page=0&sort=%2BreactionData.aangepasteTotaleHuurprijs"
 
 
